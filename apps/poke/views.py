@@ -67,7 +67,7 @@ def success(request):
     poke_count = User.objects.annotate(poke_count = Count('poker')).filter(poked =request.session['logged_in_user'])
     user_poke_count = Poke.objects.filter(poked =request.session['logged_in_user']).exclude
     poking_users = Poke.objects.filter(poked=request.session['logged_in_user']).exclude(id=request.session['logged_in_user'])
-    list_of_users = User.objects.filter(poker__poked=request.session['logged_in_user']).annotate(num_poked = Count('poker__poked'))
+    list_of_users = User.objects.filter(poker__poked=request.session['logged_in_user']).annotate(num_poked = Count('poker__poked')).order_by('-num_poked')
     current_user = User.objects.get(id=request.session['logged_in_user'])
     context = {
     'current_user': current_user,
